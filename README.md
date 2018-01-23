@@ -3,10 +3,17 @@ Linux on the STM32F769I Discovery board with Buildroot
 
 The project is a set of patches and configuration files to build a bootloader and a Linux based system image with a minimal root file system for the great [STM32F769I Discovery board](http://www.st.com/en/evaluation-tools/32f769idiscovery.html).
 
+- Buildroot 2016.08.1
+- GCC 4.4.1 (external)
+- U-Boot from Emcraft
+- Linux 4.2 from Emcraft
+- Busybox
+- OpenOCD 0.10.0
+
 Build
 -----
 
-Let's download, extract and patch Buildroot 2016.08.1:
+Let's download, extract and patch Buildroot:
 
 `$ make bootstrap`
 
