@@ -24,8 +24,9 @@ Then build:
 
 
 After the build, the directory `buildroot/output/images/` contains 
- - U-Boot `u-boot.bin` and its environment configuration `uboot-env.bin`
- - a U-Boot image `stm32f769i-disco_system.uImage` containing the Linux kernel, a RAM disk linked to it, and the device tree for this board
+ - U-Boot images `u-boot-spl.bin` and `u-boot.bin`
+ - compressed Linux kernel with linked RAM filesystem `zImage`
+ - device tree blob `stm32f769-disco.dtb`
 
 Run
 ---
@@ -34,39 +35,21 @@ Flash U-Boot:
 
 `$ make flash_bootloader`
 
+U-Boot is pre-configured to load a kernel file called `/stm32f769/zImage` and a DTB called `/stm32f769/stm32f769-disco.dtb` from the first partition of the micro SD card. If the user button (the blue one) is press when U-Boot starts, then those files are loaded over TFTP from a host with IP `192.168.201.6`.
 
-U-Boot is pre-configured to load a system image called `stm32f7/stm32f769i-disco_system.uImage` from over TFTP from a host with `IP 192.168.201.6` (change the configuration in `configs/uboot-env`). This image can be written to the embedded SPI flash with the command `update_spi` in U-Boot. After this, U-Boot can be configured to boot from the SPI with `boot_spi`.
+Changelog
+---------
 
-Boot log
---------
+* 0.2
+  * Buildroot 2018.02
+  * GCC 7.3.0
+  * U-Boot v2018.03
+  * Linux 4.15.10
 
-Output coming through USART6:
-```
-U-Boot 2010.03-00000-g884d7b3 (***)
-
-CPU  : STM32F7 (Cortex-M7)
-Freqs: SYSCLK=216MHz,HCLK=216MHz,PCLK1=54MHz,PCLK2=108MHz
-Board: STM32F769I-DISCO Revision B-01, www.emcraft.com
-DRAM:  16 MB
-In:    serial
-Out:   serial
-Err:   serial
-QSPI:  64 MB mapped at 0x90000000
-Net:   STM32_MAC
-Hit any key to stop autoboot:  0 
-Booting from network...
-...
-[load image and boot Linux kernel]
-...
-Freeing unused kernel memory: 480K (c01c2000 - c023a000)
-Starting logging: usb 1-1: new high-speed USB device number 2 using dwc2
-OK
-Initializing random number generator... random: dd urandom read with 6 bits of entropy available
-done.
-Starting network: OK
-
-Welcome to Buildroot
-buildroot login: root
-Jan  1 00:35:13 login[66]: root login on 'console'
-~ #
-```
+* 0.1
+  * Buildroot 2016.08.1
+  * GCC 4.4.1 (external)
+  * U-Boot from Emcraft
+  * Linux 4.2 from Emcraft
+  * Busybox
+  * OpenOCD 0.10.0
